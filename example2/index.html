@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.4.0">
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+  
+    
+  
+  <meta name="description" content="For these activities we will use code and data from this excellent article:
+ Hoggard, C. S., McNabb, J., &amp; Cole, J. N. (2019). The Application of Elliptic Fourier Analysis in Understanding Biface Shape and Symmetry Through the British Acheulean. Journal of Paleolithic Archaeology. https://doi.org/10.1007/s41982-019-00024-6
+ The authors have made their materials online at https://osf.io/g29eu/. I have slightly modified the code from the original to use in this workshop: Hoggard_et_al_2019_BM.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://benmarwick.github.io/2019-09-14-morph2019/example2/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/2019-09-14-morph2019/css/academic.min.04a87a1cb9027e3c50f566322527c56f.css">
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="manifest" href="/2019-09-14-morph2019/index.webmanifest">
+  <link rel="icon" type="image/png" href="/2019-09-14-morph2019/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/2019-09-14-morph2019/img/icon-192.png">
+
+  <link rel="canonical" href="https://benmarwick.github.io/2019-09-14-morph2019/example2/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Reproducibility and Transparency in Archaeological Science: A workshop at MORPH2019">
+  <meta property="og:url" content="https://benmarwick.github.io/2019-09-14-morph2019/example2/">
+  <meta property="og:title" content="Writing with R Markdown | Reproducibility and Transparency in Archaeological Science: A workshop at MORPH2019">
+  <meta property="og:description" content="For these activities we will use code and data from this excellent article:
+ Hoggard, C. S., McNabb, J., &amp; Cole, J. N. (2019). The Application of Elliptic Fourier Analysis in Understanding Biface Shape and Symmetry Through the British Acheulean. Journal of Paleolithic Archaeology. https://doi.org/10.1007/s41982-019-00024-6
+ The authors have made their materials online at https://osf.io/g29eu/. I have slightly modified the code from the original to use in this workshop: Hoggard_et_al_2019_BM."><meta property="og:image" content="https://benmarwick.github.io/2019-09-14-morph2019/img/icon-192.png">
+  <meta property="twitter:image" content="https://benmarwick.github.io/2019-09-14-morph2019/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2019-05-05T00:00:00&#43;01:00">
+    
+    <meta property="article:modified_time" content="2019-05-05T00:00:00&#43;01:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Writing with R Markdown | Reproducibility and Transparency in Archaeological Science: A workshop at MORPH2019</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/2019-09-14-morph2019/">Reproducibility and Transparency in Archaeological Science: A workshop at MORPH2019</a>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      
+
+
+
+
+
+<form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <span><i class="fas fa-bars"></i></span>
+  </button>
+
+  
+  <input name="q" type="search" class="form-control" placeholder="Search..." autocomplete="off">
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/2019-09-14-morph2019/">Overview</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/2019-09-14-morph2019/example1/">Creating a reproducible research compendium</a>
+      </li>
+      
+      <li class="active">
+        <a href="/2019-09-14-morph2019/example2/">Writing with R Markdown</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  
+</nav>
+
+    </div>
+
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#code-chunks-in-line-code">Code chunks, in-line code</a></li>
+<li><a href="#using-external-code">Using external code</a></li>
+<li><a href="#captions-cross-references">Captions &amp; cross-references</a></li>
+<li><a href="#figures-and-tables">Figures and tables</a></li>
+<li><a href="#citations-and-references">Citations and references</a></li>
+<li><a href="#special-characters-for-scientific-writing">Special characters for scientific writing</a></li>
+</ul></li>
+</ul>
+</nav>
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article" itemscope itemtype="http://schema.org/Article">
+
+        <div class="docs-article-container">
+          <h1 itemprop="name">Writing with R Markdown</h1>
+
+          <div class="article-style" itemprop="articleBody">
+            
+
+<p>For these activities we will use code and data from this excellent article:</p>
+
+<blockquote>
+<p>Hoggard, C. S., McNabb, J., &amp; Cole, J. N. (2019). The Application of Elliptic Fourier Analysis in Understanding Biface Shape and Symmetry Through the British Acheulean. <em>Journal of Paleolithic Archaeology</em>. <a href="https://doi.org/10.1007/s41982-019-00024-6" target="_blank">https://doi.org/10.1007/s41982-019-00024-6</a></p>
+</blockquote>
+
+<p>The authors have made their materials online at <a href="https://osf.io/g29eu/" target="_blank">https://osf.io/g29eu/</a>. I have slightly modified the code from the original to use in this workshop: <a href="https://github.com/benmarwick/2019-09-14-morph2019/raw/master/Hoggard_et_al_2019_BM.R" target="_blank">Hoggard_et_al_2019_BM.R</a></p>
+
+<h2 id="code-chunks-in-line-code">Code chunks, in-line code</h2>
+
+<p>We are going to do live-coding demonstration of how to import data into R in our <code>paper.Rmd</code>. You need to save this to your computer (click to download):</p>
+
+<p><a href="https://github.com/benmarwick/2019-09-14-morph2019/raw/master/Hoggard_et_al_2019_raw_data.zip" target="_blank">Hoggard_et_al_2019_raw_data.zip</a></p>
+
+<p>Then upload to <code>analysis/data/raw-data</code>, it will unzip into two files.</p>
+
+<p>Now add a <strong>chunk of code</strong> to your <code>paper.Rmd</code> that looks exactly like this:</p>
+
+<pre><code class="language-markdown">```{r get-ch-data}
+database &lt;- 
+  read_csv(here::here('analysis/data/raw_data/Hoggard_et_al_2019.csv'))
+
+tpsfile &lt;- 
+  read_rds(here::here('analysis/data/raw_data/Hoggard_et_al_2019_tps.rds'))
+```
+</code></pre>
+
+<p>To use <strong>in-line R code</strong>, we can write short sentence in our <code>paper.Rmd</code> like this, with the single backticks:</p>
+
+<p>The data has <code>`r nrow(database)`</code> specimens</p>
+
+<p>Now knit the document and inspect the output.</p>
+
+<h2 id="using-external-code">Using external code</h2>
+
+<p>Now we will insert into our <code>paper.Rmd</code> some <strong>external R code</strong> that is in an R script file. Sometimes we don&rsquo;t want to have all our R code in the <code>paper.Rmd</code> because it makes it hard to read and navigate.  You need to save this R script file to your computer (right-click, &lsquo;save link as&rsquo; to download):</p>
+
+<p><a href="https://github.com/benmarwick/2019-09-14-morph2019/raw/master/Hoggard_et_al_2019_BM.R" target="_blank">Hoggard_et_al_2019_BM.R</a></p>
+
+<p>Then upload it to <code>analysis/paper</code>.</p>
+
+<p>Here is the pattern to include code from the R script file into your <code>paper.Rmd</code>: First we use <code>knitr::read_chunk</code> to identify our R script file. Then in the R code chunks we can reference the names of sections in that R script file. To try this, you need to copy and paste these lines into your <code>paper.Rmd</code>:</p>
+
+<pre><code class="language-markdown">```{r}
+knitr::read_chunk('Hoggard_et_al_2019_BM.R')
+```
+
+```{r Compute-symmetry-and-PCA}
+```
+
+```{r figure-1}
+```
+
+```{r figure-3}
+```
+
+```{r table-3}
+```
+</code></pre>
+
+<p>Then knit the Rmd document right away to see how the output looks.</p>
+
+<p>The new code uses some R packages that we should register in our compendium. We can use the function <code>rrtools::add_dependencies_to_description()</code> that will scan the Rmd file, identify libraries used in there, and add them to the DESCRIPTION file. This will register all used R packages in the compendium.</p>
+
+<p>Please run <code>rrtools::add_dependencies_to_description()</code> now, and commit &amp; push to GitHub</p>
+
+<h2 id="captions-cross-references">Captions &amp; cross-references</h2>
+
+<p>There are two commonly used methods to add captions. First is in the code chunk header, like this:</p>
+
+<pre><code class="language-markdown">```{r figure-1, fig.cap = &quot;An exploration of biface shape and Marine Isotope Stage (MIS) through an elliptic Fourier principal component analysis (EFA-PCA). Confidence ellipses are here set to two-thirds (66.66%)&quot;}
+```
+</code></pre>
+
+<p>And the second way is outside of the code chunk using the <code>(ref:xxx)</code> pattern. This method is useful if you want to format the text or use inline R code in the caption:</p>
+
+<pre><code class="language-markdown">(ref:figure-3-caption) An examination of symmetry (AD harmonic coefficients/amplitude) through a histogram (a), and two box-and-whisker plots (Tukey style) examining symmetry against individual Marine Isotope Stage (b), and against individual sites (c)
+
+```{r figure-3, fig.cap = '(ref:figure-3-caption)'}
+```
+</code></pre>
+
+<p>To cross-reference a plot produced by a code chunk, we use the pattern <code>\@ref(fig:label)</code>, where label is the code chunk ID. To cross-reference Figure 3, we would write this:</p>
+
+<ul>
+<li>Please see Figure <code>\@ref(fig:figure-3)</code></li>
+</ul>
+
+<p>And after we knit, we will see &lsquo;Please see Figure 3&rsquo;</p>
+
+<h2 id="figures-and-tables">Figures and tables</h2>
+
+<p>Often we want to include figures in our paper that are not generated by R code. For example, photographs or drawings. Let&rsquo;s practice this with an image of a biface. You need to save this image file to your computer (right-click, &lsquo;save link as&rsquo; to download):</p>
+
+<p><a href="https://github.com/benmarwick/2019-09-14-morph2019/raw/master/British-Museum-Biface.jpg" target="_blank">British-Museum-Biface.jpg</a></p>
+
+<p>And then upload it to your RStudio folder <code>analysis/data/figures</code>.</p>
+
+<p>Then add this chunk of code to your <code>paper.Rmd</code>:</p>
+
+<pre><code class="language-markdown">```{r my-photo, fig.cap = &quot;Flint biface that retains small patch of cortex on edge just above butt. Found in Aveley, UK. Registration number1995,0401.284. Source: British Museum&quot;}
+knitr::include_graphics(here::here('analysis/figures/British-Museum-Biface.jpg')))
+```
+</code></pre>
+
+<p>We can adjust the size and position of the image using the options in the chunk header, such as <code>fig.width=2</code>. Usually we want to set the size of the image satisfy the requirements of the journal we are submitting to, such as one column wide or two columns wide. Sometimes re-sizing photos for publication is easiest to do in other software, such as <a href="https://inkscape.org" target="_blank">Inkscape</a>.</p>
+
+<p>Knit your <code>paper.Rmd</code> and take a look at the image in your document.</p>
+
+<p>We can add add a table to our document using <code>knitr::kable</code> function. This will take a data frame and convert it into a markdown table that is basic, but looks nice in our output document. There are other packages for more complex tables, such as <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html" target="_blank">kableExtra</a>, <a href="https://gt.rstudio.com/" target="_blank">gt</a> and many others.</p>
+
+<p>Adding a caption to a table is a bit different from adding a caption to a figure. We use the <code>caption</code> argument in the <code>kable</code> function, instead of the chunk header. Cross-referencing tables is the same for figures.</p>
+
+<pre><code class="language-markdown">```{r my-table-3&quot;}
+knitr::kable(table_3, caption = &quot;Descriptive statistics of symmetry values for each MIS&quot;)
+```
+</code></pre>
+
+<h2 id="citations-and-references">Citations and references</h2>
+
+<p>Citations go inside square brackets and are separated by semicolons. Each citation must have a key, composed of ‘@’ + the citation identifier from the database, and may optionally have a prefix, a locator, and a suffix. Here are some examples from <a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html" target="_blank">RStudio</a>:</p>
+
+<pre><code>Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
+
+Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
+
+Blah blah [@smith04; @doe99].
+</code></pre>
+
+<p>A minus sign (-) before the @ will suppress mention of the author in the citation. This can be useful when the author is already mentioned in the text:</p>
+
+<pre><code>Smith says blah [-@smith04].
+</code></pre>
+
+<p>You can also write an in-text citation, as follows:</p>
+
+<pre><code>@smith04 says blah.
+
+@smith04 [p. 33] says blah.
+</code></pre>
+
+<h2 id="special-characters-for-scientific-writing">Special characters for scientific writing</h2>
+
+<p>Typically in writing for research we need to include special symbols that are not part of the common character set. The following table shows how to generate commonly used symbols in a R Markdown document, the notation surrounded by dollar signs <code>$</code> is LaTeX notation:</p>
+
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Markdown/LaTeX notation</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>per mille  ‰</td>
+<td><code>$\text{\textperthousand}$</code></td>
+</tr>
+
+<tr>
+<td>delta δ</td>
+<td><code>$\delta$</code></td>
+</tr>
+
+<tr>
+<td>plus-minus ±</td>
+<td><code>$\pm$</code></td>
+</tr>
+
+<tr>
+<td>degree °</td>
+<td><code>$\text{\textdegree}$</code></td>
+</tr>
+
+<tr>
+<td>subscript CO<sub>2</sub></td>
+<td><code>CO~2~</code></td>
+</tr>
+
+<tr>
+<td>superscript <sup>14</sup>C</td>
+<td><code>^14^C</code></td>
+</tr>
+</tbody>
+</table>
+
+          </div>
+
+          
+
+
+
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/2019-09-14-morph2019/example1/" rel="next">Creating a reproducible research compendium</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on May 5, 2019</p>
+
+          
+<p class="edit-page">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/example2.md">
+    <i class="fas fa-pen pr-2"></i>Edit this page
+  </a>
+</p>
+
+
+
+          
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+
+      
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/2019-09-14-morph2019/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js" integrity="sha256-pB/deHc9CGfFpJRjC43imB29Rse8tak+5eXqntO94ck=" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/2019-09-14-morph2019/js/academic.min.16bbb3750feb7244c9bc409a5a4fe678.js"></script>
+
+    
+
+
+
+
+
+
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
