@@ -71,7 +71,7 @@ class: normal
 
 .medium[Full documentation of today's workshop is online at:
 
-<https://benmarwick.github.io/2019-09-14-morph2019/>]
+<https://benmarwick.github.io/2019-12-09-brown/>]
 
 ---
 class: normal
